@@ -28,8 +28,8 @@ const FinancialRatios = () => {
   // Date state
   const [range, setRange] = useState([
     {
-      startDate: new Date(),
-      endDate: addDays(new Date(), 7),
+      endDate: new Date(),
+      startDate: addDays(new Date(), -10),
       key: "selection",
     },
   ]);
@@ -90,6 +90,7 @@ const FinancialRatios = () => {
   // console.log(formatDate(range[0].startDate));
 
   console.log(startDate, endDate);
+
   return (
     <>
       <div className="container-md">
