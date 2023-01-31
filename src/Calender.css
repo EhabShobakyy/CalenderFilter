@@ -1,8 +1,14 @@
+table {
+    background-color: #f5f5f5 !important; 
+}
+table th {
+    color: #707070 !important;
+}
 input.inputBox {
     font-size: 14px;
-    padding: 5px 8px 4px 8px;
     border-radius: 3px;
-    border: 1px solid gray;
+    border: 1px solid #dfdfdf;
+    padding: 16.5px 14px;
     
 }
 .calendarWrap {
@@ -12,6 +18,11 @@ input.inputBox {
 .inputBox {
    width: 200px;
    padding: 16.5px 14px;
+   background-color: transparent;
+   margin: 15px 0px;
+}
+.inputBox:hover {
+    border-color: black;
 }
 
 .calendarElement {
@@ -21,4 +32,9 @@ input.inputBox {
     top: 40px;
     border: 1px solid #ccc;
     z-index: 999;
+}
+
+.rdrCalendarWrapper {
+    position: absolute;
+    transition: all 5ms;
 }

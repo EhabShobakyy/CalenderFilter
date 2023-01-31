@@ -19,7 +19,6 @@ import "react-date-range/dist/theme/default.css"; // theme css file
 import "./Calender.css";
 // Calender Init
 import { DateRange } from "react-date-range";
-import format from "date-fns/format";
 import { addDays } from "date-fns";
 
 const FinancialRatios = () => {
@@ -46,8 +45,6 @@ const FinancialRatios = () => {
   let startDate = formatDate(range[0].startDate);
   let endDate = formatDate(range[0].endDate);
 
-  // console.log(formatDate(state[0].startDate).split("/").join("-"));
-
   useEffect(() => {
     AccessRefreshTokens.getAccessToken();
 
@@ -61,7 +58,7 @@ const FinancialRatios = () => {
         }
       )
       .then((res) => {
-        console.log(res.data.chartsData);
+        // console.log(res.data.chartsData);
         setHistoricalPrice(res.data.chartsData);
       })
       .catch((err) => {
@@ -82,14 +79,26 @@ const FinancialRatios = () => {
   };
   // Hide Calendar on outside click
   const hideOnClickOutside = (e) => {
-    console.log(refOne.current);
+    // console.log(refOne.current);
     if (refOne.current && !refOne.current.contains(e.target)) {
       setOpenCalendar(false);
     }
   };
-  // console.log(formatDate(range[0].startDate));
 
-  console.log(startDate, endDate);
+  // Handel Function To Auto Close Calendar When Choose Start & End DATE
+  let rangeArray = []; // array to store start & end date
+  const handelRange = (item) => {
+    if (item.selection.startDate === item.selection.endDate) {
+      rangeArray.push(item.selection.startDate);
+    } else if (item.selection.startDate != item.selection.endDate) {
+      rangeArray.push(item.selection.startDate);
+      rangeArray.push(item.selection.endDate);
+    }
+    setRange([item.selection]);
+    if (rangeArray.length > 1) {
+      setOpenCalendar(false);
+    }
+  };
 
   return (
     <>
@@ -109,7 +118,7 @@ const FinancialRatios = () => {
             <div ref={refOne}>
               {openCalendar && (
                 <DateRange
-                  onChange={(item) => setRange([item.selection])}
+                  onChange={handelRange}
                   showSelectionPreview={true}
                   moveRangeOnFirstSelection={false}
                   months={2}
@@ -143,16 +152,46 @@ const FinancialRatios = () => {
                         <TableCell className="historical-date">
                           {formatDate(item?.forDate)}
                         </TableCell>
-                        <TableCell>{SignRemove(item?.close)}</TableCell>
-                        <TableCell>({SignRemove(item?.change)})</TableCell>
-                        <TableCell>
+                        <TableCell
+                          style={{ color: item?.close < 0 ? "red" : "green" }}
+                        >
+                          {SignRemove(item?.close)}
+                        </TableCell>
+                        <TableCell
+                          style={{ color: item?.change < 0 ? "red" : "green" }}
+                        >
+                          ({SignRemove(item?.change)})
+                        </TableCell>
+                        <TableCell
+                          style={{
+                            color: item?.percentageChange < 0 ? "red" : "green",
+                          }}
+                        >
                           ({SignRemove(item?.percentageChange)})
                         </TableCell>
                         <TableCell>{formatNum(item?.volume)}</TableCell>
                         <TableCell>{formatNum(item?.amount)}</TableCell>
-                        <TableCell>{SignRemove(item?.open)}</TableCell>
-                        <TableCell>{SignRemove(item?.max)}</TableCell>
-                        <TableCell>{SignRemove(item?.min)}</TableCell>
+                        <TableCell
+                          style={{
+                            color: item?.open < 0 ? "red" : "green",
+                          }}
+                        >
+                          {SignRemove(item?.open)}
+                        </TableCell>
+                        <TableCell
+                          style={{
+                            color: item?.max < 0 ? "red" : "green",
+                          }}
+                        >
+                          {SignRemove(item?.max)}
+                        </TableCell>
+                        <TableCell
+                          style={{
+                            color: item?.min < 0 ? "red" : "green",
+                          }}
+                        >
+                          {SignRemove(item?.min)}
+                        </TableCell>
                       </TableRow>
                     );
                   })
