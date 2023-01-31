@@ -2,14 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 // to call data
 import axios from "axios";
 import AccessRefreshTokens from "./RefreshToken/AccessRefreshTokens";
-// Tables Import
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
+
 import Moment from "moment";
 // style
 import "./Test.css";
@@ -104,7 +97,7 @@ const FinancialRatios = () => {
     <>
       <div className="container-md">
         <div className="historical-price py-5">
-          <h2>HISTORICAL PRICE</h2>
+          <h2 className="global-heading">HISTORICAL PRICE</h2>
 
           <div className="calendarWrap">
             <input
@@ -129,76 +122,76 @@ const FinancialRatios = () => {
             </div>{" "}
           </div>
 
-          <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-              <TableHead>
-                <TableRow className="table-head">
-                  <TableCell>Date</TableCell>
-                  <TableCell>Price</TableCell>
-                  <TableCell>Change</TableCell>
-                  <TableCell>Change(%)</TableCell>
-                  <TableCell>Volume</TableCell>
-                  <TableCell>Tournover</TableCell>
-                  <TableCell>Open</TableCell>
-                  <TableCell>High</TableCell>
-                  <TableCell>Low</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
+          <div className="historical-table">
+            <table>
+              <thead>
+                <tr className="table-head">
+                  <td>Date</td>
+                  <td>Price</td>
+                  <td>Change</td>
+                  <td>Change(%)</td>
+                  <td>Volume</td>
+                  <td>Tournover</td>
+                  <td>Open</td>
+                  <td>High</td>
+                  <td>Low</td>
+                </tr>
+              </thead>
+              <tbody>
                 {historicalPrice
                   .map((item, idx) => {
                     return (
-                      <TableRow key={idx}>
-                        <TableCell className="historical-date">
+                      <tr key={idx}>
+                        <td className="historical-date">
                           {formatDate(item?.forDate)}
-                        </TableCell>
-                        <TableCell
+                        </td>
+                        <td
                           style={{ color: item?.close < 0 ? "red" : "green" }}
                         >
                           {SignRemove(item?.close)}
-                        </TableCell>
-                        <TableCell
+                        </td>
+                        <td
                           style={{ color: item?.change < 0 ? "red" : "green" }}
                         >
                           ({SignRemove(item?.change)})
-                        </TableCell>
-                        <TableCell
+                        </td>
+                        <td
                           style={{
                             color: item?.percentageChange < 0 ? "red" : "green",
                           }}
                         >
                           ({SignRemove(item?.percentageChange)})
-                        </TableCell>
-                        <TableCell>{formatNum(item?.volume)}</TableCell>
-                        <TableCell>{formatNum(item?.amount)}</TableCell>
-                        <TableCell
+                        </td>
+                        <td>{formatNum(item?.volume)}</td>
+                        <td>{formatNum(item?.amount)}</td>
+                        <td
                           style={{
                             color: item?.open < 0 ? "red" : "green",
                           }}
                         >
                           {SignRemove(item?.open)}
-                        </TableCell>
-                        <TableCell
+                        </td>
+                        <td
                           style={{
                             color: item?.max < 0 ? "red" : "green",
                           }}
                         >
                           {SignRemove(item?.max)}
-                        </TableCell>
-                        <TableCell
+                        </td>
+                        <td
                           style={{
                             color: item?.min < 0 ? "red" : "green",
                           }}
                         >
                           {SignRemove(item?.min)}
-                        </TableCell>
-                      </TableRow>
+                        </td>
+                      </tr>
                     );
                   })
                   .reverse()}
-              </TableBody>
-            </Table>
-          </TableContainer>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </>

@@ -1,8 +1,18 @@
-table {
-    background-color: #f5f5f5 !important; 
+.global-heading {
+    color: #707070;
+    font-size: 23px;
 }
-table th {
+.historical-table table {
+    background-color: #f5f5f5 ;
+    width: 100%;
+}
+.table-head {
     color: #707070 !important;
+    font-weight: bold;
+}
+.historical-table table td {
+    padding: 10px 0px;
+    border-bottom: 1px solid #dfdfdf;
 }
 input.inputBox {
     font-size: 14px;
